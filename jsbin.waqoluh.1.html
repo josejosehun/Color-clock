@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by josejosehun (http://jsbin.com/waqoluh/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower7%CRoboto7%CSaira+Semi+Condensed7%CUbuntu" rel="stylesheet"> <!-- Inserting four types of font family. -->
+  <title>Color clock</title>
+<style id="jsbin-css">
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body { /* The background of the color clock are the full html and body. */
+  height: 100%;
+  width: 100%;
+}
+
+#clock {
+  background-color: lightgreen; /* The background color of the color clock doesn't change. */
+  font-size: 3rem;
+  margin-top: -1.5rem; /* Facilitating to put clock div in the middle vertically. */
+  position: relative;
+  text-align: center;
+  width: 70vw;
+}
+</style>
+</head>
+<body>
+  <div id="clock">12:13:14</div>
+<script id="jsbin-javascript">
+// When I had more knowledge on JavaScript I could amplifier this code with some prompt box where users to change the hour for their zone time, font-family, separator, background color of the clock, etc.
+
+function colorClock() {
+  var date = new Date(); // For using all methods of Date object.
+  
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  
+  if (hours < 10) { // Getting full time format, including 0 where it's needed.
+    hours = '0' + hours;
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  if (seconds < 10) {
+    seconds = '0' + seconds;
+  }
+  
+  var hoursColor = 0;
+  var hoursCalculate = hours / 1.5; // As hexa code uses hexadecimal system, I have to get 16 values (from 0 to "f") to use each defined colors. For it I have to convert 24 hours (from 0 to 23), 60 minutes (from 0 to 59) and 60 seconds (from 0 to 59) to 16 values each.
+  var hoursNumber = Math.floor(hoursCalculate); // Variable hoursCalculate is rounded down to its nearest integer.
+  
+  if (hoursNumber == 10) {
+    hoursColor = 'a';
+  } else if (hoursNumber == 11) {
+    hoursColor = 'b';
+  } else if (hoursNumber == 12) {
+    hoursColor = 'c';
+  } else if (hoursNumber == 13) {
+    hoursColor = 'd';
+  } else if (hoursNumber == 14) {
+    hoursColor = 'e';
+  } else if (hoursNumber == 15) {
+    hoursColor = 'f';
+  } else {
+    hoursColor = hoursNumber;
+  }
+  
+  var minutesColor = 0;
+  var minutesCalculate = minutes / 3.75;
+  var minutesNumber = Math.floor(minutesCalculate);
+  
+  if (minutesNumber == 10) {
+    minutesColor = 'a';
+  } else if (minutesNumber == 11) {
+    minutesColor = 'b';
+  } else if (minutesNumber == 12) {
+    minutesColor = 'c';
+  } else if (minutesNumber == 13) {
+    minutesColor = 'd';
+  } else if (minutesNumber == 14) {
+    minutesColor = 'e';
+  } else if (minutesNumber == 15) {
+    minutesColor = 'f';
+  } else {
+    minutesColor = minutesNumber;
+  }
+  
+  var secondsColor = 0;
+  var secondsCalculate = seconds / 3.75;
+  var secondsNumber = Math.floor(secondsCalculate);
+  
+  if (secondsNumber == 10) {
+    secondsColor = 'a';
+  } else if (secondsNumber == 11) {
+    secondsColor = 'b';
+  } else if (secondsNumber == 12) {
+    secondsColor = 'c';
+  } else if (secondsNumber == 13) {
+    secondsColor = 'd';
+  } else if (secondsNumber == 14) {
+    secondsColor = 'e';
+  } else if (secondsNumber == 15) {
+    secondsColor = 'f';
+  } else {
+    secondsColor = secondsNumber;
+  }
+  
+  var hexColor = '#' + hoursColor + minutesColor + secondsColor; // To change the background color of the color clock each second.
+  var separator = ':';
+  
+  if (seconds <= 5) { // Changing the separator between hours and minutes as well as minutes and seconds each 10th second, beginning from 5.
+    separator = '°';
+  } else if (seconds <= 15) {
+    separator = '»';
+  } else if (seconds <= 25) {
+    separator = '*';
+  } else if (seconds <= 35) {
+    separator = '~';
+  } else if (seconds <= 45) {
+    separator = '^';
+  } else if (seconds <= 55) {
+    separator = ':';
+  } else if (seconds <= 59) {
+    separator = '°';
+  }
+  
+  var clockFace = hours + separator + minutes + separator + seconds;
+  
+  document.getElementById('clock').innerHTML = clockFace; // Displaying color clock.
+  document.body.style.background = hexColor; // Displaying the background of color clock.
+  
+  if (seconds == 0) { // Changing the position of the color clock each 10th second as a screen saver.
+    document.getElementById('clock').style.top = '5vh';
+    document.getElementById('clock').style.left = '5vw';
+  } else if (seconds == 10) {
+    document.getElementById('clock').style.top = '5vh';
+    document.getElementById('clock').style.left = '25vw';
+  } else if (seconds == 20) {
+    document.getElementById('clock').style.top = '50vh';
+    document.getElementById('clock').style.left = '15vw';
+  } else if (seconds == 30) {
+    document.getElementById('clock').style.top = '90vh';
+    document.getElementById('clock').style.left = '5vw';
+  } else if (seconds == 40) {
+    document.getElementById('clock').style.top = '90vh';
+    document.getElementById('clock').style.left = '25vw';
+  } else if (seconds == 50) {
+    document.getElementById('clock').style.top = '50vh';
+    document.getElementById('clock').style.left = '15vw';
+  } 
+  
+  if (hours <= 5) { // Changing the font family of color clock each sixth hours.
+    document.getElementById('clock').style.font.family = 'Ubuntu, Arial, "Times New Roman"';
+  } else if (hours <= 11) {
+    document.getElementById('clock').style.font.family = '"Indie Flower", Arial, "Times New Roman"';
+  } else if (hours <= 17) {
+    document.getElementById('clock').style.font.family = 'Roboto, Arial, "Times New Roman"';
+  } else if (hours <= 23) {
+    document.getElementById('clock').style.font.family = '"Saira Semi Condensed", sans-serif, Arial, "Times New Roman"';
+  }
+  
+  setTimeout(function() { // Running colorClock function each second (1000 millisecond).
+    colorClock();
+  }, 1000);
+  
+}
+
+colorClock();
+</script>
+</body>
+</html>
